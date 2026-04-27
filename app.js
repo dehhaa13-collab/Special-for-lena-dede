@@ -167,7 +167,7 @@
         const partyLabel = state.contractType === 'pidryad' ? 'Підрядник' : 'Виконавець';
 
         return `Ти — досвідчений український юрист, що спеціалізується на договірному праві. 
-Твоє завдання — скласти юридично бездоганний Договір ${contractLabel} українською мовою.
+Твоє завдання — скласти юридично бездоганний Договір ${contractLabel} українською мовою, включаючи додатки.
 
 ОБОВ'ЯЗКОВІ ПРАВИЛА:
 1. Договір відповідає Цивільному кодексу України (${state.contractType === 'pidryad' ? 'глава 61, ст. 837-864' : 'глава 63, ст. 901-907'}).
@@ -178,19 +178,30 @@
 6. Обов'язково включи розділ про конфіденційність.
 7. Обов'язково включи розділ про порядок вирішення спорів (переговори → суд).
 8. Сторони: "Замовник" та "${partyLabel}".
-9. Преамбула: ФОП діє "на підставі відомостей з Єдиного державного реєстру" (НЕ на підставі Статуту).
-10. Реквізити ФОП: РНОКПП (НЕ ЄДРПОУ), IBAN, адреса, банк.
+9. Преамбула: фізична особа або ФОП діє "на підставі відомостей з Єдиного державного реєстру" (НЕ на підставі Статуту).
+10. Реквізити: ПІБ, РНОКПП (ІПН), IBAN, адреса реєстрації, банк, телефон, email.
 11. Пені за прострочення: подвійна облікова ставка НБУ від суми заборгованості за кожен день прострочення.
+12. У розділі "Вартість та порядок розрахунків" обов'язково вкажи порядок оплати: передоплата (% та строки), решта суми (строки), можливість оплати готівкою або безготівково.
+13. Передоплата є невідшкодовуваною у разі відмови Замовника від послуг менш ніж за визначений строк до погодженої дати.
+
+ДОДАТКИ (ОБОВ'ЯЗКОВО):
+— Додаток №1: "ПЕРЕЛІК ПОСЛУГ, ВАРТІСТЬ ТА УМОВИ" — таблиця з колонками: №, Послуга, Опис/деталі, Кількість/год., Вартість (грн). На основі опису робіт розбий на конкретні послуги (3-7 рядків). Внизу рядок РАЗОМ та Примітки.
+— Додаток №2: "АКТ ПРИЙОМУ-ПЕРЕДАЧІ НАДАНИХ ПОСЛУГ" — стандартний акт зі списком наданих послуг, датою, загальною вартістю, полем "претензій НЕ МАЄ / МАЄ (потрібне підкреслити)", зауваженнями.
+— Кожен додаток має блок підписів обох сторін.
+
+БЛОКИ ПІДПИСІВ мають включати: ПІБ, ІПН (РНОКПП), Тел., Email, IBAN, Адреса (для ${partyLabel}а) / Паспорт/ID, Тел., Email, Адреса (для Замовника-фізособи). Також поля "Підпис: ___" і "Дата: ___".
 
 ФОРМАТ ВІДПОВІДІ:
 Поверни ТІЛЬКИ валідний JSON (без markdown, без \`\`\`, без пояснень) з такою структурою:
 {
   "title": "ДОГОВІР ${contractLabel.toUpperCase()} №___",
+  "subtitle": "короткий опис суті (наприклад: декоратора, майстра макіяжу та зачісок)",
+  "cityDate": "м. __________ «___» __________ 20___ р.",
   "preamble": "повний текст преамбули з даними сторін",
   "sections": [
     {"title": "1. ПРЕДМЕТ ДОГОВОРУ", "content": "текст розділу з підпунктами 1.1, 1.2..."},
-    {"title": "2. СТРОКИ ВИКОНАННЯ", "content": "текст..."},
-    {"title": "3. ЦІНА ТА ПОРЯДОК РОЗРАХУНКІВ", "content": "текст..."},
+    {"title": "2. ВАРТІСТЬ ПОСЛУГ ТА ПОРЯДОК РОЗРАХУНКІВ", "content": "2.1 Загальна вартість... 2.2 Порядок оплати: передоплата __% протягом __ днів, решта не пізніше __... 2.3 Оплата безготівково або готівкою... 2.4 Передоплата невідшкодовувана якщо..."},
+    {"title": "3. СТРОКИ НАДАННЯ ПОСЛУГ", "content": "3.1 Дата... 3.2 Час початку/завершення... 3.3 Місце..."},
     {"title": "4. ПРАВА ТА ОБОВ'ЯЗКИ ЗАМОВНИКА", "content": "текст..."},
     {"title": "5. ПРАВА ТА ОБОВ'ЯЗКИ ${partyLabel.toUpperCase()}А", "content": "текст..."},
     {"title": "6. ПОРЯДОК ЗДАЧІ-ПРИЙМАННЯ", "content": "текст..."},
@@ -198,11 +209,28 @@
     {"title": "8. КОНФІДЕНЦІЙНІСТЬ", "content": "текст..."},
     {"title": "9. ФОРС-МАЖОРНІ ОБСТАВИНИ", "content": "текст..."},
     {"title": "10. СТРОК ДІЇ, ЗМІНА ТА РОЗІРВАННЯ ДОГОВОРУ", "content": "текст..."},
-    {"title": "11. ПРИКІНЦЕВІ ПОЛОЖЕННЯ", "content": "текст..."}
+    {"title": "11. ПРИКІНЦЕВІ ПОЛОЖЕННЯ", "content": "11.1 Договір складено у двох примірниках... 11.2 Невід'ємною частиною є Додаток №1, Додаток №2..."}
   ],
   "requisites": {
-    "customer": "повний блок реквізитів Замовника",
-    "contractor": "повний блок реквізитів ${partyLabel}а"
+    "customer": "ЗАМОВНИК:\\nПІБ: ___\\nПаспорт/ID: ___\\nТел.: ___\\nEmail: ___\\nАдреса: ___\\n\\nПідпис: ___\\nДата: ___",
+    "contractor": "${partyLabel.toUpperCase()}:\\nПІБ: ___\\nІПН: ___\\nТел.: ___\\nEmail: ___\\nIBAN: ___\\nБанк: ___\\nАдреса: ___\\n\\nПідпис: ___\\nДата: ___"
+  },
+  "appendix1": {
+    "title": "ДОДАТОК № 1",
+    "subtitle": "до Договору про ${contractLabel} від «___» __________ 20___ р.",
+    "heading": "ПЕРЕЛІК ПОСЛУГ, ВАРТІСТЬ ТА УМОВИ",
+    "services": [
+      {"num": "1", "name": "Назва послуги", "details": "Опис / деталі", "qty": "", "price": ""},
+      {"num": "2", "name": "...", "details": "...", "qty": "", "price": ""}
+    ],
+    "total": "РАЗОМ:",
+    "notes": "Примітки: ___"
+  },
+  "appendix2": {
+    "title": "ДОДАТОК № 2",
+    "subtitle": "до Договору про ${contractLabel} від «___» __________ 20___ р.",
+    "heading": "АКТ ПРИЙОМУ-ПЕРЕДАЧІ НАДАНИХ ПОСЛУГ",
+    "content": "Ми, що підписалися нижче: ${partyLabel} ___ та Замовник ___, склали цей Акт про наступне:\\n1. ${partyLabel} надав, а Замовник прийняв такі послуги:\\n— ___\\n2. Дата надання послуг: «___» __________ 20___ р.\\n3. Загальна вартість послуг: ___ грн.\\n4. Оплата здійснена повністю / частково (потрібне підкреслити).\\n5. Замовник претензій до якості наданих послуг: НЕ МАЄ / МАЄ (потрібне підкреслити).\\n6. Зауваження Замовника (за наявності): ___"
   }
 }`;
     }
@@ -289,23 +317,67 @@
 
     // ===== RENDERING =====
     function renderPreview(contract) {
+        const partyName = state.contractType === 'pidryad' ? 'ПІДРЯДНИК' : 'ВИКОНАВЕЦЬ';
         let html = '';
-        html += `<h2 style="text-align:center;margin-bottom:24px;font-size:1.1rem;">${escHtml(contract.title || 'ДОГОВІР')}</h2>`;
-        html += `<p>${escHtml(contract.preamble || '')}</p>`;
+        html += '<h2 style="text-align:center;margin-bottom:4px;font-size:1.15rem;font-weight:700;">' + escHtml(contract.title || 'ДОГОВІР') + '</h2>';
+        if (contract.subtitle) {
+            html += '<p style="text-align:center;margin-bottom:8px;font-size:0.9rem;color:#5c5c60;font-style:italic;">' + escHtml(contract.subtitle) + '</p>';
+        }
+        if (contract.cityDate) {
+            html += '<p style="text-align:center;margin-bottom:20px;font-size:0.85rem;color:#86868b;">' + escHtml(contract.cityDate) + '</p>';
+        }
+        html += '<p>' + escHtml(contract.preamble || '') + '</p>';
 
         if (contract.sections) {
-            contract.sections.forEach(section => {
-                html += `<h2>${escHtml(section.title)}</h2>`;
-                html += `<p>${escHtml(section.content)}</p>`;
+            contract.sections.forEach(function(section) {
+                html += '<h2>' + escHtml(section.title) + '</h2>';
+                html += '<p>' + escHtml(section.content) + '</p>';
             });
         }
 
         if (contract.requisites) {
-            html += `<h2>РЕКВІЗИТИ ТА ПІДПИСИ СТОРІН</h2>`;
-            html += `<div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:12px;">`;
-            html += `<div><strong>ЗАМОВНИК:</strong><br>${escHtml(contract.requisites.customer || '')}</div>`;
-            html += `<div><strong>${state.contractType === 'pidryad' ? 'ПІДРЯДНИК' : 'ВИКОНАВЕЦЬ'}:</strong><br>${escHtml(contract.requisites.contractor || '')}</div>`;
-            html += `</div>`;
+            html += '<h2>РЕКВІЗИТИ ТА ПІДПИСИ СТОРІН</h2>';
+            html += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:12px;padding:16px;border:1px solid #e0e0e0;border-radius:8px;">';
+            html += '<div><strong>ЗАМОВНИК:</strong><br>' + escHtml(contract.requisites.customer || '') + '</div>';
+            html += '<div><strong>' + partyName + ':</strong><br>' + escHtml(contract.requisites.contractor || '') + '</div>';
+            html += '</div>';
+        }
+
+        // ДОДАТОК №1
+        if (contract.appendix1) {
+            var a = contract.appendix1;
+            html += '<div style="margin-top:40px;padding-top:24px;border-top:2px solid #1d1d1f;">';
+            html += '<h2 style="text-align:center;font-size:1.05rem;margin-bottom:4px;">' + escHtml(a.title) + '</h2>';
+            if (a.subtitle) html += '<p style="text-align:center;font-size:0.85rem;color:#5c5c60;margin-bottom:4px;">' + escHtml(a.subtitle) + '</p>';
+            if (a.heading) html += '<h3 style="text-align:center;font-size:0.95rem;margin-bottom:16px;font-weight:700;">' + escHtml(a.heading) + '</h3>';
+            if (a.services && a.services.length) {
+                html += '<table style="width:100%;border-collapse:collapse;font-size:0.82rem;margin-bottom:12px;">';
+                html += '<thead><tr style="background:#f4f6f2;"><th style="border:1px solid #ccc;padding:6px 8px;width:30px;">№</th><th style="border:1px solid #ccc;padding:6px 8px;">Послуга</th><th style="border:1px solid #ccc;padding:6px 8px;">Опис / деталі</th><th style="border:1px solid #ccc;padding:6px 8px;width:80px;">Кількість</th><th style="border:1px solid #ccc;padding:6px 8px;width:90px;">Вартість (грн)</th></tr></thead><tbody>';
+                a.services.forEach(function(s) {
+                    html += '<tr><td style="border:1px solid #ccc;padding:6px 8px;text-align:center;">' + escHtml(s.num) + '</td><td style="border:1px solid #ccc;padding:6px 8px;">' + escHtml(s.name) + '</td><td style="border:1px solid #ccc;padding:6px 8px;">' + escHtml(s.details || '') + '</td><td style="border:1px solid #ccc;padding:6px 8px;text-align:center;">' + escHtml(s.qty || '') + '</td><td style="border:1px solid #ccc;padding:6px 8px;text-align:right;">' + escHtml(s.price || '') + '</td></tr>';
+                });
+                html += '<tr style="font-weight:700;"><td colspan="4" style="border:1px solid #ccc;padding:6px 8px;text-align:right;">' + escHtml(a.total || 'РАЗОМ:') + '</td><td style="border:1px solid #ccc;padding:6px 8px;text-align:right;"></td></tr>';
+                html += '</tbody></table>';
+            }
+            if (a.notes) html += '<p style="font-size:0.82rem;color:#5c5c60;">' + escHtml(a.notes) + '</p>';
+            html += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:20px;padding:16px;border:1px solid #e0e0e0;border-radius:8px;">';
+            html += '<div><strong>ВИКОНАВЕЦЬ:</strong><br>ПІБ: ___<br>ІПН: ___<br>Тел.: ___<br>Email: ___<br>IBAN: ___<br><br>Підпис: ___<br>Дата: ___</div>';
+            html += '<div><strong>ЗАМОВНИК:</strong><br>ПІБ: ___<br>Паспорт/ID: ___<br>Тел.: ___<br>Email: ___<br>Адреса: ___<br><br>Підпис: ___<br>Дата: ___</div>';
+            html += '</div></div>';
+        }
+
+        // ДОДАТОК №2
+        if (contract.appendix2) {
+            var a2 = contract.appendix2;
+            html += '<div style="margin-top:40px;padding-top:24px;border-top:2px solid #1d1d1f;">';
+            html += '<h2 style="text-align:center;font-size:1.05rem;margin-bottom:4px;">' + escHtml(a2.title) + '</h2>';
+            if (a2.subtitle) html += '<p style="text-align:center;font-size:0.85rem;color:#5c5c60;margin-bottom:4px;">' + escHtml(a2.subtitle) + '</p>';
+            if (a2.heading) html += '<h3 style="text-align:center;font-size:0.95rem;margin-bottom:16px;font-weight:700;">' + escHtml(a2.heading) + '</h3>';
+            html += '<p>' + escHtml(a2.content || '') + '</p>';
+            html += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:20px;padding:16px;border:1px solid #e0e0e0;border-radius:8px;">';
+            html += '<div><strong>ВИКОНАВЕЦЬ:</strong><br>ПІБ: ___<br>ІПН: ___<br>Тел.: ___<br>Email: ___<br>IBAN: ___<br><br>Підпис: ___<br>Дата: ___</div>';
+            html += '<div><strong>ЗАМОВНИК:</strong><br>ПІБ: ___<br>Паспорт/ID: ___<br>Тел.: ___<br>Email: ___<br>Адреса: ___<br><br>Підпис: ___<br>Дата: ___</div>';
+            html += '</div></div>';
         }
 
         els.previewContent.innerHTML = html;
@@ -353,22 +425,32 @@
 <meta charset="utf-8">
 <style>
     body { font-family: 'Times New Roman', serif; font-size: 12pt; line-height: 1.6; margin: 2cm; }
-    h1 { text-align: center; font-size: 14pt; margin-bottom: 20pt; }
+    h1 { text-align: center; font-size: 14pt; margin-bottom: 6pt; }
+    .subtitle { text-align: center; font-size: 12pt; font-style: italic; margin-bottom: 6pt; }
+    .city-date { text-align: center; font-size: 11pt; margin-bottom: 16pt; color: #555; }
     h2 { font-size: 12pt; font-weight: bold; margin-top: 14pt; margin-bottom: 6pt; }
+    h3 { font-size: 12pt; font-weight: bold; text-align: center; margin-top: 10pt; margin-bottom: 8pt; }
     p { text-align: justify; margin-bottom: 6pt; }
-    .requisites { display: flex; justify-content: space-between; margin-top: 20pt; }
-    .requisites div { width: 45%; }
+    table.services { width: 100%; border-collapse: collapse; margin-bottom: 10pt; }
+    table.services th, table.services td { border: 1px solid #000; padding: 4pt 6pt; font-size: 10pt; }
+    table.services th { background: #f0f0f0; font-weight: bold; }
+    .sig-table td { width: 50%; vertical-align: top; padding: 8pt; border: 1px solid #000; }
+    .appendix-break { page-break-before: always; margin-top: 24pt; }
 </style>
 </head>
 <body>
 <h1>${escHtmlForDoc(contract.title || 'ДОГОВІР')}</h1>
+${contract.subtitle ? '<p class="subtitle">' + escHtmlForDoc(contract.subtitle) + '</p>' : ''}
+${contract.cityDate ? '<p class="city-date">' + escHtmlForDoc(contract.cityDate) + '</p>' : ''}
 <p>${escHtmlForDoc(contract.preamble || '')}</p>
-${(contract.sections || []).map(s => `<h2>${escHtmlForDoc(s.title)}</h2><p>${escHtmlForDoc(s.content)}</p>`).join('')}
+${(contract.sections || []).map(s => '<h2>' + escHtmlForDoc(s.title) + '</h2><p>' + escHtmlForDoc(s.content) + '</p>').join('')}
 <h2>РЕКВІЗИТИ ТА ПІДПИСИ СТОРІН</h2>
-<table width="100%"><tr>
-<td width="50%" valign="top"><b>ЗАМОВНИК:</b><br>${escHtmlForDoc(contract.requisites?.customer || '')}</td>
-<td width="50%" valign="top"><b>${state.contractType === 'pidryad' ? 'ПІДРЯДНИК' : 'ВИКОНАВЕЦЬ'}:</b><br>${escHtmlForDoc(contract.requisites?.contractor || '')}</td>
+<table class="sig-table" width="100%"><tr>
+<td><b>ЗАМОВНИК:</b><br>${escHtmlForDoc(contract.requisites?.customer || '')}</td>
+<td><b>${state.contractType === 'pidryad' ? 'ПІДРЯДНИК' : 'ВИКОНАВЕЦЬ'}:</b><br>${escHtmlForDoc(contract.requisites?.contractor || '')}</td>
 </tr></table>
+${contract.appendix1 ? buildAppendix1Html(contract.appendix1) : ''}
+${contract.appendix2 ? buildAppendix2Html(contract.appendix2) : ''}
 </body>
 </html>`;
 
@@ -398,6 +480,40 @@ ${(contract.sections || []).map(s => `<h2>${escHtmlForDoc(s.title)}</h2><p>${esc
             .replace(/</g, '&lt;')
             .replace(/>/g, '&gt;')
             .replace(/\n/g, '<br>');
+    }
+
+    function buildAppendix1Html(a) {
+        var html = '<div class="appendix-break">';
+        html += '<h2 style="text-align:center;">' + escHtmlForDoc(a.title) + '</h2>';
+        if (a.subtitle) html += '<p style="text-align:center;font-size:11pt;">' + escHtmlForDoc(a.subtitle) + '</p>';
+        if (a.heading) html += '<h3>' + escHtmlForDoc(a.heading) + '</h3>';
+        if (a.services && a.services.length) {
+            html += '<table class="services"><thead><tr><th>№</th><th>Послуга</th><th>Опис / деталі</th><th>Кількість / год.</th><th>Вартість (грн)</th></tr></thead><tbody>';
+            a.services.forEach(function(s) {
+                html += '<tr><td>' + escHtmlForDoc(s.num) + '</td><td>' + escHtmlForDoc(s.name) + '</td><td>' + escHtmlForDoc(s.details || '') + '</td><td>' + escHtmlForDoc(s.qty || '') + '</td><td>' + escHtmlForDoc(s.price || '') + '</td></tr>';
+            });
+            html += '<tr style="font-weight:bold;"><td colspan="4" style="text-align:right;">' + escHtmlForDoc(a.total || 'РАЗОМ:') + '</td><td></td></tr>';
+            html += '</tbody></table>';
+        }
+        if (a.notes) html += '<p>' + escHtmlForDoc(a.notes) + '</p>';
+        html += '<br><table class="sig-table" width="100%"><tr>';
+        html += '<td><b>ВИКОНАВЕЦЬ:</b><br>ПІБ: ___<br>ІПН: ___<br>Тел.: ___<br>Email: ___<br>IBAN: ___<br><br>Підпис: ___<br>Дата: ___</td>';
+        html += '<td><b>ЗАМОВНИК:</b><br>ПІБ: ___<br>Паспорт/ID: ___<br>Тел.: ___<br>Email: ___<br>Адреса: ___<br><br>Підпис: ___<br>Дата: ___</td>';
+        html += '</tr></table></div>';
+        return html;
+    }
+
+    function buildAppendix2Html(a2) {
+        var html = '<div class="appendix-break">';
+        html += '<h2 style="text-align:center;">' + escHtmlForDoc(a2.title) + '</h2>';
+        if (a2.subtitle) html += '<p style="text-align:center;font-size:11pt;">' + escHtmlForDoc(a2.subtitle) + '</p>';
+        if (a2.heading) html += '<h3>' + escHtmlForDoc(a2.heading) + '</h3>';
+        html += '<p>' + escHtmlForDoc(a2.content || '') + '</p>';
+        html += '<br><table class="sig-table" width="100%"><tr>';
+        html += '<td><b>ВИКОНАВЕЦЬ:</b><br>ПІБ: ___<br>ІПН: ___<br>Тел.: ___<br>Email: ___<br>IBAN: ___<br><br>Підпис: ___<br>Дата: ___</td>';
+        html += '<td><b>ЗАМОВНИК:</b><br>ПІБ: ___<br>Паспорт/ID: ___<br>Тел.: ___<br>Email: ___<br>Адреса: ___<br><br>Підпис: ___<br>Дата: ___</td>';
+        html += '</tr></table></div>';
+        return html;
     }
 
     // ===== HISTORY =====
