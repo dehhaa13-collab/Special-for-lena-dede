@@ -749,11 +749,12 @@ ${contract.appendix2 ? buildAppendix2Html(contract.appendix2) : ''}
             }
         });
 
-        // Set default dates
-        const today = new Date().toISOString().slice(0, 10);
-        const monthLater = new Date(Date.now() + 30 * 86400000).toISOString().slice(0, 10);
-        $('#date-start').value = today;
-        $('#date-end').value = monthLater;
+        // Set default dates (DD.MM.YYYY)
+        const d1 = new Date();
+        const d2 = new Date(Date.now() + 30 * 86400000);
+        const formatBtnDate = d => String(d.getDate()).padStart(2, '0') + '.' + String(d.getMonth() + 1).padStart(2, '0') + '.' + d.getFullYear();
+        $('#date-start').value = formatBtnDate(d1);
+        $('#date-end').value = formatBtnDate(d2);
     }
 
     // ===== BOOT =====
