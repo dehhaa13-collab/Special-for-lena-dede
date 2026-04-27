@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="ДоговірPro — ІІ-генератор юридичних договорів для ФОП в Україні. Створюйте договори підряду та надання послуг за хвилину.">
+    <title>ДоговірPro — Генератор договорів</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- ===== LOGIN SCREEN ===== -->
+    <div class="login-screen" id="login-screen">
+        <div class="login-card">
+            <div class="login-card__icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            </div>
+            <h1 class="login-card__title">Договір<strong>Pro</strong></h1>
+            <p class="login-card__subtitle">Генератор договорів для ФОП</p>
+            <form class="login-form" id="login-form" autocomplete="off">
+                <div class="login-form__group">
+                    <label class="login-form__label" for="login-name">Логін</label>
+                    <input class="login-form__input" type="text" id="login-name" placeholder="Введіть логін" required autofocus>
+                </div>
+                <div class="login-form__group">
+                    <label class="login-form__label" for="login-password">Пароль</label>
+                    <input class="login-form__input" type="password" id="login-password" placeholder="Введіть пароль" required>
+                </div>
+                <p class="login-form__error" id="login-error"></p>
+                <button class="btn btn--primary login-form__submit" type="submit" id="login-submit">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
+                    Увійти
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ===== HEADER ===== -->
+    <header class="header" id="header">
+        <div class="header__inner">
+            <a href="#" class="header__logo" id="logo">
+                <svg class="header__logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+                <span>Договір<strong>Pro</strong></span>
+            </a>
+            <nav class="header__nav">
+                <button class="header__btn header__btn--ghost" id="btn-history" title="Історія">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                    <span>Історія</span>
+                </button>
+                <button class="header__btn header__btn--ghost" id="btn-settings" title="Налаштування">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+                    <span>Налаштування</span>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- ===== MAIN ===== -->
+    <main class="main">
+
+        <!-- Steps indicator -->
+        <div class="steps" id="steps-indicator">
+            <div class="steps__item steps__item--active" data-step="1">
+                <span class="steps__num">1</span>
+                <span class="steps__label">Тип договору</span>
+            </div>
+            <div class="steps__line"></div>
+            <div class="steps__item" data-step="2">
+                <span class="steps__num">2</span>
+                <span class="steps__label">Деталі</span>
+            </div>
+            <div class="steps__line"></div>
+            <div class="steps__item" data-step="3">
+                <span class="steps__num">3</span>
+                <span class="steps__label">Генерація</span>
+            </div>
+        </div>
+
+        <!-- ===== STEP 1: Contract Type ===== -->
+        <section class="step" id="step-1">
+            <h1 class="step__title">Оберіть тип договору</h1>
+            <p class="step__subtitle">Визначте, який саме документ вам потрібен</p>
+
+            <div class="cards" id="type-cards">
+                <button class="card" data-type="pidryad" id="card-pidryad">
+                    <div class="card__icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><line x1="12" y1="12" x2="12" y2="16"/><line x1="10" y1="14" x2="14" y2="14"/></svg>
+                    </div>
+                    <h2 class="card__title">Договір підряду</h2>
+                    <p class="card__desc">Конкретний результат: створення, ремонт, виготовлення, монтаж</p>
+                    <span class="card__chapter">Глава 61 ЦКУ</span>
+                </button>
+                <button class="card" data-type="poslugy" id="card-poslugy">
+                    <div class="card__icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    </div>
+                    <h2 class="card__title">Договір надання послуг</h2>
+                    <p class="card__desc">Процес: консультації, навчання, супровід, аудит</p>
+                    <span class="card__chapter">Глава 63 ЦКУ</span>
+                </button>
+            </div>
+
+            <!-- Mode toggle -->
+            <div class="mode-toggle" id="mode-toggle">
+                <h2 class="mode-toggle__title">Оберіть формат</h2>
+                <div class="mode-toggle__wrap">
+                    <button class="mode-toggle__btn mode-toggle__btn--active" data-mode="full" id="mode-full">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+                        <strong>Повний договір</strong>
+                        <span>Усі дані заповнені</span>
+                    </button>
+                    <button class="mode-toggle__btn" data-mode="template" id="mode-template">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><rect x="8" y="13" width="8" height="2" rx="1" fill="currentColor" opacity="0.3"/><rect x="8" y="17" width="5" height="2" rx="1" fill="currentColor" opacity="0.3"/></svg>
+                        <strong>Шаблон</strong>
+                        <span>З [ПЛЕЙСХОЛДЕРАМИ]</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="step__actions">
+                <button class="btn btn--primary" id="btn-next-1" disabled>
+                    Далі
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                </button>
+            </div>
+        </section>
+
+        <!-- ===== STEP 2: Details ===== -->
+        <section class="step step--hidden" id="step-2">
+            <h1 class="step__title">Введіть деталі договору</h1>
+            <p class="step__subtitle" id="step2-subtitle">Заповніть необхідну інформацію</p>
+
+            <form class="form" id="contract-form" autocomplete="off">
+
+                <!-- AI Provider Toggle -->
+                <div class="ai-toggle" id="ai-toggle">
+                    <label class="form__label">Режим ІІ</label>
+                    <div class="ai-toggle__wrap">
+                        <button type="button" class="ai-toggle__btn ai-toggle__btn--active" data-provider="gemini" id="ai-btn-gemini">
+                            <span class="ai-toggle__icon">⚡</span>
+                            <div class="ai-toggle__text">
+                                <strong>Стандарт</strong>
+                                <span>Google Gemini — швидко</span>
+                            </div>
+                        </button>
+                        <button type="button" class="ai-toggle__btn" data-provider="openai" id="ai-btn-openai">
+                            <span class="ai-toggle__icon">🧠</span>
+                            <div class="ai-toggle__text">
+                                <strong>Продвинутий</strong>
+                                <span>OpenAI GPT-4o — точніше</span>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Work description -->
+                <div class="form__group form__group--full">
+                    <label class="form__label" for="work-description">
+                        Опис робіт / послуг <span class="form__required">*</span>
+                    </label>
+                    <textarea class="form__textarea" id="work-description" rows="4" placeholder="Опишіть своїми словами, що саме потрібно зробити. Наприклад: «Розробка дизайн-макету інтернет-магазину на 10 сторінок у Figma»" required></textarea>
+                    <span class="form__hint">ІІ сформулює юридично грамотний предмет договору на основі вашого опису</span>
+                </div>
+
+                <!-- Price + City row -->
+                <div class="form__row">
+                    <div class="form__group">
+                        <label class="form__label" for="price">Ціна (грн) <span class="form__required">*</span></label>
+                        <input class="form__input" type="text" id="price" placeholder="50 000" required>
+                    </div>
+                    <div class="form__group">
+                        <label class="form__label" for="city">Місто</label>
+                        <input class="form__input" type="text" id="city" placeholder="Київ" value="Київ">
+                    </div>
+                </div>
+
+                <!-- Dates -->
+                <div class="form__row">
+                    <div class="form__group">
+                        <label class="form__label" for="date-start">Дата початку</label>
+                        <input class="form__input" type="date" id="date-start">
+                    </div>
+                    <div class="form__group">
+                        <label class="form__label" for="date-end">Дата закінчення</label>
+                        <input class="form__input" type="date" id="date-end">
+                    </div>
+                </div>
+
+                <!-- Payer days -->
+                <div class="form__group">
+                    <label class="form__label" for="pay-days">Строк оплати після Акту (днів)</label>
+                    <input class="form__input" type="number" id="pay-days" placeholder="5" value="5" min="1" max="90">
+                </div>
+
+                <!-- ======= CUSTOMER DATA (hidden in template mode) ======= -->
+                <div class="form__section" id="section-customer">
+                    <h3 class="form__section-title">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                        Замовник
+                    </h3>
+                    <div class="form__row">
+                        <div class="form__group">
+                            <label class="form__label" for="cust-name">ПІБ</label>
+                            <input class="form__input" type="text" id="cust-name" placeholder="Іваненко Іван Іванович">
+                        </div>
+                        <div class="form__group">
+                            <label class="form__label" for="cust-rnokpp">РНОКПП</label>
+                            <input class="form__input" type="text" id="cust-rnokpp" placeholder="1234567890" maxlength="10">
+                        </div>
+                    </div>
+                    <div class="form__group form__group--full">
+                        <label class="form__label" for="cust-address">Адреса реєстрації</label>
+                        <input class="form__input" type="text" id="cust-address" placeholder="м. Київ, вул. Хрещатик, 1, кв. 10">
+                    </div>
+                    <div class="form__row">
+                        <div class="form__group">
+                            <label class="form__label" for="cust-iban">IBAN</label>
+                            <input class="form__input" type="text" id="cust-iban" placeholder="UA123456789012345678901234567">
+                        </div>
+                        <div class="form__group">
+                            <label class="form__label" for="cust-bank">Банк</label>
+                            <input class="form__input" type="text" id="cust-bank" placeholder="АТ КБ «ПриватБанк»">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ======= CONTRACTOR DATA (hidden in template mode) ======= -->
+                <div class="form__section" id="section-contractor">
+                    <h3 class="form__section-title">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg>
+                        Підрядник / Виконавець
+                    </h3>
+                    <div class="form__row">
+                        <div class="form__group">
+                            <label class="form__label" for="contr-name">ПІБ</label>
+                            <input class="form__input" type="text" id="contr-name" placeholder="Петренко Петро Петрович">
+                        </div>
+                        <div class="form__group">
+                            <label class="form__label" for="contr-rnokpp">РНОКПП</label>
+                            <input class="form__input" type="text" id="contr-rnokpp" placeholder="0987654321" maxlength="10">
+                        </div>
+                    </div>
+                    <div class="form__group form__group--full">
+                        <label class="form__label" for="contr-address">Адреса реєстрації</label>
+                        <input class="form__input" type="text" id="contr-address" placeholder="м. Львів, вул. Шевченка, 5">
+                    </div>
+                    <div class="form__row">
+                        <div class="form__group">
+                            <label class="form__label" for="contr-iban">IBAN</label>
+                            <input class="form__input" type="text" id="contr-iban" placeholder="UA123456789012345678901234567">
+                        </div>
+                        <div class="form__group">
+                            <label class="form__label" for="contr-bank">Банк</label>
+                            <input class="form__input" type="text" id="contr-bank" placeholder="АТ «Ощадбанк»">
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+            <div class="step__actions">
+                <button class="btn btn--ghost" id="btn-back-2">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+                    Назад
+                </button>
+                <button class="btn btn--primary" id="btn-generate">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                    Згенерувати договір
+                </button>
+            </div>
+        </section>
+
+        <!-- ===== STEP 3: Result ===== -->
+        <section class="step step--hidden" id="step-3">
+            <h1 class="step__title">Ваш договір готовий</h1>
+            <p class="step__subtitle">Перегляньте текст та завантажте документ</p>
+
+            <div class="preview" id="preview-area">
+                <div class="preview__content" id="preview-content">
+                    <!-- Contract text rendered here -->
+                </div>
+            </div>
+
+            <div class="step__actions">
+                <button class="btn btn--ghost" id="btn-back-3">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+                    Назад
+                </button>
+                <button class="btn btn--primary" id="btn-download">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                    Завантажити .docx
+                </button>
+                <button class="btn btn--outline" id="btn-new">
+                    Створити новий
+                </button>
+            </div>
+        </section>
+
+        <!-- ===== LOADING OVERLAY ===== -->
+        <div class="loading" id="loading">
+            <div class="loading__spinner"></div>
+            <p class="loading__text">ІІ складає договір...</p>
+            <p class="loading__subtext">Це може зайняти 10-30 секунд</p>
+        </div>
+
+    </main>
+
+    <!-- ===== SETTINGS MODAL ===== -->
+    <div class="modal-overlay" id="modal-settings">
+        <div class="modal">
+            <div class="modal__header">
+                <h2 class="modal__title">Налаштування</h2>
+                <button class="modal__close" id="modal-close-settings">&times;</button>
+            </div>
+            <div class="modal__body">
+                <div class="form__group">
+                    <label class="form__label" for="ai-provider">ІІ-провайдер</label>
+                    <select class="form__select" id="ai-provider">
+                        <option value="gemini">Google Gemini</option>
+                        <option value="openai">OpenAI (GPT)</option>
+                    </select>
+                </div>
+                <div class="form__group">
+                    <label class="form__label" for="api-key">API-ключ</label>
+                    <input class="form__input" type="password" id="api-key" placeholder="Вставте ваш API-ключ">
+                    <span class="form__hint">Ключ зберігається тільки у вашому браузері та нікуди не передається</span>
+                </div>
+                <div class="form__group">
+                    <label class="form__label" for="ai-model">Модель</label>
+                    <input class="form__input" type="text" id="ai-model" placeholder="gemini-1.5-pro">
+                    <span class="form__hint">Залиште порожнім для моделі за замовчуванням</span>
+                </div>
+
+                <hr class="modal__divider">
+
+                <h3 class="form__section-title" style="margin-bottom:12px;">
+                    Дані за замовчуванням (тітка Лена)
+                </h3>
+                <p class="form__hint" style="margin-bottom:16px;">Ці дані будуть автоматично підставлені як одна зі сторін</p>
+                <div class="form__group">
+                    <label class="form__label" for="default-name">ПІБ</label>
+                    <input class="form__input" type="text" id="default-name" placeholder="Ваше ПІБ">
+                </div>
+                <div class="form__row">
+                    <div class="form__group">
+                        <label class="form__label" for="default-rnokpp">РНОКПП</label>
+                        <input class="form__input" type="text" id="default-rnokpp" placeholder="1234567890" maxlength="10">
+                    </div>
+                    <div class="form__group">
+                        <label class="form__label" for="default-iban">IBAN</label>
+                        <input class="form__input" type="text" id="default-iban" placeholder="UA...">
+                    </div>
+                </div>
+                <div class="form__group form__group--full">
+                    <label class="form__label" for="default-address">Адреса</label>
+                    <input class="form__input" type="text" id="default-address" placeholder="Адреса реєстрації">
+                </div>
+                <div class="form__group">
+                    <label class="form__label" for="default-bank">Банк</label>
+                    <input class="form__input" type="text" id="default-bank" placeholder="АТ КБ «ПриватБанк»">
+                </div>
+            </div>
+            <div class="modal__footer">
+                <button class="btn btn--primary" id="btn-save-settings">Зберегти</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== HISTORY MODAL ===== -->
+    <div class="modal-overlay" id="modal-history">
+        <div class="modal">
+            <div class="modal__header">
+                <h2 class="modal__title">Історія договорів</h2>
+                <button class="modal__close" id="modal-close-history">&times;</button>
+            </div>
+            <div class="modal__body">
+                <div id="history-list" class="history-list">
+                    <p class="history-list__empty">Ще немає згенерованих договорів</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== TOAST ===== -->
+    <div class="toast" id="toast"></div>
+
+    <script src="app.js"></script>
+</body>
+</html>
