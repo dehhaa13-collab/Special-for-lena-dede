@@ -68,7 +68,7 @@ export default async function handler(req, res) {
 
 // ===== GEMINI =====
 async function callGemini(systemPrompt, userPrompt) {
-    const model = 'gemini-2.5-flash-preview-04-17';
+    const model = 'gemini-2.5-flash';
     const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${_C.g}`;
 
     const response = await fetch(url, {
