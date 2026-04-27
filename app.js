@@ -11,7 +11,7 @@
         currentStep: 1,
         contractType: null,   // 'pidryad' | 'poslugy'
         mode: 'full',         // 'full' | 'template'
-        aiProvider: 'gemini', // 'gemini' (Стандарт) | 'openai' (Продвинутий)
+        aiProvider: 'openai', // 'gemini' (Стандарт) | 'openai' (Продвинутий)
         generatedContract: null,
         history: JSON.parse(localStorage.getItem('dp_history') || '[]'),
         auth: { login: '', password: '' },
