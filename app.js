@@ -275,7 +275,7 @@
             + 'ОПИС РОБІТ (розбий на 3–7 послуг для таблиці Додатку №1, розподіли ціну по рядках):\n'
             + description + '\n\n'
             + 'ВИМОГИ ДО ЯКОСТІ:\n'
-            + '— Кожен підпункт (1.1, 1.2) на окремому рядку (\\n).\n'
+            + '— Кожен підпункт (1.1, 1.2) на окремому рядку (\n).\n'
             + '— Текст юридично точний, без "води" та канцеляризмів.\n'
             + '— JSON повинен бути 100% валідним.';
     }
@@ -410,24 +410,7 @@
         const contract = state.generatedContract;
         if (!contract) return;
 
-        // Build plain text for the docx
-        let text = '';
-        text += (contract.title || 'ДОГОВІР') + '\n\n';
-        text += (contract.preamble || '') + '\n\n';
-
-        if (contract.sections) {
-            contract.sections.forEach(section => {
-                text += section.title + '\n\n';
-                text += section.content + '\n\n';
-            });
-        }
-
-        text += 'РЕКВІЗИТИ ТА ПІДПИСИ СТОРІН\n\n';
-        if (contract.requisites) {
-            text += 'ЗАМОВНИК:\n' + (contract.requisites.customer || '') + '\n\n';
-            const label = state.contractType === 'pidryad' ? 'ПІДРЯДНИК' : 'ВИКОНАВЕЦЬ';
-            text += label + ':\n' + (contract.requisites.contractor || '') + '\n';
-        }
+        // HTML-based doc generation (the plain text block was removed as unused)
 
         // Generate a simple .docx using a minimal approach
         // We create an HTML-based docx since we don't have the docx library loaded
@@ -505,7 +488,7 @@ ${contract.appendix2 ? buildAppendix2Html(contract.appendix2) : ''}
             a.services.forEach(function(s) {
                 html += '<tr><td>' + escHtmlForDoc(s.num) + '</td><td>' + escHtmlForDoc(s.name) + '</td><td>' + escHtmlForDoc(s.details || '') + '</td><td>' + escHtmlForDoc(s.qty || '') + '</td><td>' + escHtmlForDoc(s.price || '') + '</td></tr>';
             });
-            html += '<tr style="font-weight:bold;"><td colspan="4" style="text-align:right;">' + escHtmlForDoc(a.total || 'РАЗОМ:') + '</td><td></td></tr>';
+            html += '<tr style="font-weight:bold;"><td colspan="4" style="text-align:right;">РАЗОМ:</td><td>' + escHtmlForDoc(a.total || '') + '</td></tr>';
             html += '</tbody></table>';
         }
         if (a.notes) html += '<p>' + escHtmlForDoc(a.notes) + '</p>';
